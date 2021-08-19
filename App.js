@@ -12,11 +12,19 @@ export default function App() {
     setCourseGoals(courseGoals => [...courseGoals, { key: 'goal' + Date.now(), value: enteredGoal }]);
   };
 
+  const deleteGoalHandler = (goalKey) => {
+    setCourseGoals(courseGoals => courseGoals.filter(goal => goal.key !== goalKey));
+  }
+
   return (
     <View style={styles.container}>
       <GoalInput addGoalHandler={addGoalHandler} />
       <FlatList data={courseGoals} renderItem={itemData => (
-        <GoalItem value={itemData.item.value} onDelete={() => console.log('Touch')}/>
+        <GoalItem 
+          id={itemData.item.key}
+          value={itemData.item.value} 
+          onDelete={deleteGoalHandler}
+        />
       )}/>
       
       <StatusBar style="auto" />
